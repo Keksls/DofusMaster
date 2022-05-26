@@ -1,0 +1,12 @@
+﻿<Window x:Class="DofusMaster.KeyCode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DofusMaster"
+        mc:Ignorable="d"
+        Title="KeyCode" Height="128" Width="128" ResizeMode="NoResize">
+    <Grid Background="#363333">
+        <Label x:Name="lbKeyCode" Height="64" Foreground="#F6E9E9" Margin="8 0 8 0" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="36" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center">9999</Label>
+    </Grid>
+</Window>

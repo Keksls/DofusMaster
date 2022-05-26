@@ -1,17 +1,40 @@
-﻿using System;
+﻿using Gma.System.MouseKeyHook;
+using System;
 
 namespace DofusMaster
 {
-    public static class Keys
+    public static class IO
     {
-        private static GlobalKeyboardHook hook;
+        private static GlobalKeyboardHook keyboardHook;
         public static event Action<VirtualKeys> KeyDown;
         public static event Action<VirtualKeys> KeyUp;
+        public static event Action<int, int> LeftClick;
+        public static bool isCtrl { get; private set; }
 
-        static Keys()
+        static IO()
         {
-            hook = new GlobalKeyboardHook();
-            hook.KeyboardPressed += Hook_KeyboardPressed;
+            keyboardHook = new GlobalKeyboardHook();
+            keyboardHook.KeyboardPressed += Hook_KeyboardPressed;
+            Hook.GlobalEvents().MouseDown += IO_MouseDown;
+            KeyDown += Keys_KeyDown;
+            KeyUp += IO_KeyUp; ;
+        }
+
+        private static void IO_KeyUp(VirtualKeys key)
+        {
+            if (key == VirtualKeys.Control || key == VirtualKeys.LeftControl || key == VirtualKeys.RightControl)
+                isCtrl = false;
+        }
+
+        private static void Keys_KeyDown(VirtualKeys key)
+        {
+            if (key == VirtualKeys.Control || key == VirtualKeys.LeftControl || key == VirtualKeys.RightControl)
+                isCtrl = true;
+        }
+
+        private static void IO_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            LeftClick?.Invoke(e.X, e.Y);
         }
 
         private static void Hook_KeyboardPressed(object sender, GlobalKeyboardHookEventArgs e)
@@ -181,25 +204,25 @@ namespace DofusMaster
         /// <summary></summary>
         Sleep = 0x5F,
         /// <summary></summary>
-        Numpad0 = 0x60,
+        Num0 = 0x60,
         /// <summary></summary>
-        Numpad1 = 0x61,
+        Num1 = 0x61,
         /// <summary></summary>
-        Numpad2 = 0x62,
+        Num2 = 0x62,
         /// <summary></summary>
-        Numpad3 = 0x63,
+        Num3 = 0x63,
         /// <summary></summary>
-        Numpad4 = 0x64,
+        Num4 = 0x64,
         /// <summary></summary>
-        Numpad5 = 0x65,
+        Num5 = 0x65,
         /// <summary></summary>
-        Numpad6 = 0x66,
+        Num6 = 0x66,
         /// <summary></summary>
-        Numpad7 = 0x67,
+        Num7 = 0x67,
         /// <summary></summary>
-        Numpad8 = 0x68,
+        Num8 = 0x68,
         /// <summary></summary>
-        Numpad9 = 0x69,
+        Num9 = 0x69,
         /// <summary></summary>
         Multiply = 0x6A,
         /// <summary></summary>
