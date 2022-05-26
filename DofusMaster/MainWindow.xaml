@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DofusMaster"
         mc:Ignorable="d"
-        Title="Dofus Master - v1.0.0" Height="512" Width="700">
+        Title="Dofus Master - v1.0.0" Height="512" Width="512">
     <Grid Background="#363333">
         <Border CornerRadius="8" Width="256" BorderBrush="#272121" HorizontalAlignment="Left" Margin="8" BorderThickness="8">
             <StackPanel>
