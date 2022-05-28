@@ -5,14 +5,25 @@ using System.Runtime.InteropServices;
 using WindowsInput.Native;
 using WindowsInput;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace DofusMaster
 {
     [Serializable]
     public class DofusAccount
     {
-        #region Import windows low level API  // Import the user32.dll
+        #region Import windows low level API 
+        const short SWP_NOMOVE = 0X2;
+        const short SWP_NOSIZE = 1;
+        const short SWP_NOZORDER = 0X4;
+        const int SWP_SHOWWINDOW = 0x0040;
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+        [DllImport("user32.dll")]
+        static extern bool AllowSetForegroundWindow(int dwProcessId);
+        [DllImport("User32.dll")]
+        private static extern bool ShowWindow(IntPtr handle, int nCmdShow);
+        [DllImport("User32.dll")]
+        private static extern bool IsIconic(IntPtr handle);
         [DllImport("user32.dll")]
         static extern int MapVirtualKey(int uCode, uint uMapType);
         const uint MAPVK_VK_TO_CHAR = 0x02;
@@ -37,12 +48,14 @@ namespace DofusMaster
         public static extern int SendMessage(int hWnd, uint Msg, int wParam, int lParam);
         public const uint WM_LBUTTONDOWN = 0x0201;
         public const uint WM_LBUTTONUP = 0x0202;
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool BringWindowToTop(IntPtr hWnd);
         #endregion
 
         public int Order { get; set; }
         public string Name { get; set; }
         public VirtualKeys SelectionKey { get; set; }
-        public bool SelectionKeyCtrl { get; set; }
+        public bool Selected { get; set; } = true;
         [JsonIgnore]
         public IntPtr Handle;
         [JsonIgnore]
@@ -58,6 +71,7 @@ namespace DofusMaster
             Name = Process.MainWindowTitle.Split(' ')[0];
             IO.KeyDown += IO_KeyDown;
             sim = new InputSimulator();
+            AllowSetForegroundWindow(Process.Id);
         }
 
         public void SetOrder(int order)
@@ -74,7 +88,7 @@ namespace DofusMaster
         private void IO_KeyDown(VirtualKeys key)
         {
             if (key == SelectionKey)
-                if ((SelectionKeyCtrl && IO.isCtrl) || !SelectionKeyCtrl)
+                if ((SaveManager.Save.AccountShortcutCtrl && IO.isCtrl) || !SaveManager.Save.AccountShortcutCtrl)
                     ShowWindow();
         }
 
@@ -141,26 +155,9 @@ namespace DofusMaster
 
         public void AutoPilote(int x, int y)
         {
-            WriteIntoConsole("/travel [" + x + ", " + y + "]");
+            WriteIntoConsole("/travel " + x + " " + y + "");
             Thread.Sleep(1500);
             KeyPress(VirtualKeyCode.RETURN);
         }
-
-        private static VirtualKeyCode ConvertCharToVirtualKey(char ch)
-        {
-            return (VirtualKeyCode)(Keys)char.ToUpper(ch);
-            //short vkey = VkKeyScan(ch);
-            //VirtualKeyCode retval = (VirtualKeyCode)(vkey & 0xff);
-            //int modifiers = vkey >> 8;
-
-            //if ((modifiers & 1) != 0) retval |= VirtualKeyCode.SHIFT;
-            //if ((modifiers & 2) != 0) retval |= VirtualKeyCode.CONTROL;
-            ////if ((modifiers & 4) != 0) retval |= VirtualKeyCode.alt;
-
-            //return retval;
-        }
-
-        [DllImport("user32.dll")]
-        private static extern short VkKeyScan(char ch);
     }
 }

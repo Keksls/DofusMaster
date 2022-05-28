@@ -59,6 +59,14 @@
                             <Setter Property="Height" Value="28"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox HorizontalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" VerticalAlignment="Center" Margin="2 6 0 0" Width="24" Height="24" IsChecked="{Binding Selected}"></CheckBox>
+                                <Label Foreground="#FFCC6431" FontFamily="Segoe UI Semibold" Cursor="Hand"  Padding="2" Content="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </Border>
 
@@ -79,24 +87,25 @@
 
         <Grid HorizontalAlignment="Center" Width="1" Margin="24 8 0 8" Background="#272121"></Grid>
 
-        <StackPanel x:Name="rightPanel" IsEnabled="False" Width="248" HorizontalAlignment="Right" Margin="0 8 0 0">
+        <StackPanel x:Name="rightPanel" IsEnabled="True" Width="248" HorizontalAlignment="Right" Margin="0 8 0 0">
             <Border CornerRadius="8" Height="64" Width="232" BorderBrush="#272121" Margin="0 0 0 8" HorizontalAlignment="Center"  BorderThickness="8">
                 <StackPanel Background="#272121">
-                    <Label x:Name="selectedAccountLabel" Height="22" Width="196" Padding="2" Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" FontSize="14" Margin="0">Focused account</Label>
-                    <Label x:Name="replicationMode" Height="22" Padding="2" Foreground="#F6E9E9" Width="196" Margin="0" FontFamily="Segoe UI Semibold" FontSize="14">No replication</Label>
+                    <CheckBox x:Name="chkEnableReplication" IsChecked="True" Width="196" Padding="4 -1 0 0" Foreground="#F6E9E9" Margin="0 4 0 0" FontFamily="Segoe UI Semibold" FontSize="12">Enable mouse replication</CheckBox>
+                    <Image Source="/Images/info.png" Width="16" Height="16" Margin="148 -16 0 0" ToolTip="Mouse replication allow you to replicate a mouse click on every dofus client"></Image>
+                    <Label x:Name="replicationMode" Height="22" Padding="2" Foreground="#F6E9E9" Width="196" Margin="0 4 0 0" FontFamily="Segoe UI Semibold" FontSize="14">No replication</Label>
                 </StackPanel>
             </Border>
 
-            <Border CornerRadius="8" Height="72" Width="232" BorderBrush="#272121" HorizontalAlignment="Center"  BorderThickness="8">
+            <Border CornerRadius="8" Height="100" Width="232" BorderBrush="#272121" HorizontalAlignment="Center"  BorderThickness="8">
                 <Grid Background="#272121">
-                    <TextBox x:Name="tbConsoleText" Height="26" Background="#FF1E1818" BorderBrush="#272121" Foreground="#F6E9E9" Width="196" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="2">Hey boy !</TextBox>
-                    <Button x:Name="btnSend" Cursor="Hand" Click="btnSend_Click" Width="196" Height="22" Background="#FFCC6431"  Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom">Send to console
+                    <TextBox x:Name="tbConsoleText" TextWrapping="Wrap" AcceptsReturn="True" Height="52" Background="#FF1E1818" BorderBrush="#272121" Foreground="#F6E9E9" Width="216" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="2">Hey boy !</TextBox>
+                    <Button x:Name="btnSend" Cursor="Hand" Click="btnSend_Click" Width="196" Height="22" Background="#363333"  Foreground="#FFCC6431" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom">Send to console
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="8"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FFA94E21"/>
+                                        <Setter Property="Background" Value="#FF1E1818"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -109,22 +118,17 @@
                 <Grid Background="#272121">
                     <TextBox x:Name="tbX" Height="26" PreviewTextInput="PreviewTextInput" Background="#FF1E1818" BorderBrush="#272121" Foreground="#F6E9E9" Width="82" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin=" 16 0 0 0" Padding="2" >-2</TextBox>
                     <TextBox x:Name="tbY" Height="26" PreviewTextInput="PreviewTextInput" Background="#FF1E1818" BorderBrush="#272121" Foreground="#F6E9E9" Width="82" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="2" Margin="0 0 16 0">0</TextBox>
-                    <Button x:Name="btnTravel" Cursor="Hand" Click="btnTravel_Click" Width="196" Height="22" Background="#FFCC6431"  Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom">Travel
+                    <Button x:Name="btnTravel" Cursor="Hand" Click="btnTravel_Click" Width="196" Height="22" Background="#363333"  Foreground="#FFCC6431" FontFamily="Segoe UI Semibold" VerticalAlignment="Bottom">Travel
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="8"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FFA94E21"/>
-                                    </Trigger>
-                                </Style.Triggers>
                             </Style>
                         </Button.Resources>
                     </Button>
                 </Grid>
             </Border>
 
-            <Button x:Name="btnOpenConfig" Cursor="Hand" Click="btnOpenConfig_Click" Width="232" Margin="0 8 0 0" Height="24" Background="#FFE12828" Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" FontSize="12">Open configuration file
+            <Button x:Name="btnOpenConfig" Cursor="Hand" Click="btnOpenConfig_Click" Width="232" Margin="0 8 0 0" Height="24" Background="#272121" Foreground="#FFCC6431" FontFamily="Segoe UI Semibold" FontSize="12">Open configuration file
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
@@ -137,7 +141,7 @@
                 </Button.Resources>
             </Button>
 
-            <Button x:Name="btnKeyCode" Cursor="Hand" Click="btnKeyCode_Click" Width="232" Margin="0 8 0 0" Height="24" Background="#FFE12828" Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" FontSize="12">KeyCode tool (config shortcut)
+            <Button x:Name="btnKeyCode" Cursor="Hand" Click="btnKeyCode_Click" Width="232" Margin="0 8 0 0" Height="24" Background="#272121" Foreground="#FFCC6431" FontFamily="Segoe UI Semibold" FontSize="12">KeyCode tool (config shortcut)
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="8"/>
@@ -150,8 +154,8 @@
                 </Button.Resources>
             </Button>
 
-            <Grid Height="32"></Grid>
-            
+            <Grid Height="4"></Grid>
+
             <Button x:Name="btnCloseAll" Cursor="Hand" Click="btnCloseAll_Click" Width="232" Margin="0 8 0 0" Height="24" Background="#FFE12828" Foreground="#F6E9E9" FontFamily="Segoe UI Semibold" FontSize="12">Close all accounts
                 <Button.Resources>
                     <Style TargetType="Border">

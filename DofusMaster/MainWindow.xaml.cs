@@ -27,14 +27,15 @@ namespace DofusMaster
 
         private void IO_LeftClick(int x, int y)
         {
-            Manager.OrderReplication(x, y);
+            if (chkEnableReplication.IsChecked.HasValue && chkEnableReplication.IsChecked.Value)
+                Manager.OrderReplication(x, y);
         }
 
         private void Manager_OnSelectAccount(int accountIndex)
         {
             Dispatcher.Invoke(() =>
             {
-                selectedAccountLabel.Content = "focus : (" + Manager.ConnectedAccounts[accountIndex].Order + ") - " + Manager.ConnectedAccounts[accountIndex].Name;
+                lbAccounts.SelectedIndex = accountIndex;
             });
         }
 
@@ -43,7 +44,9 @@ namespace DofusMaster
             lbAccounts.Items.Clear();
             Manager.RefreshConnectedAccounts();
             foreach (var account in Manager.ConnectedAccounts)
+            {
                 lbAccounts.Items.Add(account);
+            }
             rightPanel.IsEnabled = Manager.HasAccounts;
         }
 
@@ -66,7 +69,7 @@ namespace DofusMaster
             selectionPanel.IsEnabled = true;
             selectedAccountIndex = order;
             DofusAccount account = Manager.GetAccount(order);
-            selectAccountName.Content = account.Name;
+            selectAccountName.Content = "[" + account.SelectionKey.ToString() + "] : " + account.Name;
         }
 
         private void btnUp_Click(object sender, RoutedEventArgs e)
@@ -127,7 +130,7 @@ namespace DofusMaster
 
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            Regex regex = new Regex("-[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -142,7 +145,7 @@ namespace DofusMaster
                     Thread t = new Thread(() =>
                     {
                         foreach (var account in Manager.ConnectedAccounts)
-                            account.WriteIntoConsole("/travel [" + x + ", " + y + "]");
+                            account.WriteIntoConsole("/travel " + x + " " + y);
 
                         Thread.Sleep(1500);
 
@@ -183,6 +186,16 @@ namespace DofusMaster
         {
             KeyCode kc = new KeyCode();
             kc.Show();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SaveManager.SaveAccounts();
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SaveManager.SaveAccounts();
         }
     }
 }

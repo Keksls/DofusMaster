@@ -21,6 +21,7 @@ namespace DofusMaster
         private static ReplicationMode replicationMode;
         public static ReplicationMode ReplicationMode { get { return replicationMode; } set { replicationMode = value; OnSetReplicationMode?.Invoke(replicationMode); } }
         private static Queue<replicationData> replicationQueue;
+        private static bool canReplicate = true;
 
         static Manager()
         {
@@ -165,6 +166,7 @@ namespace DofusMaster
                 {
                     replicationData data = replicationQueue.Dequeue();
                     doReplication(data);
+                    canReplicate = true;
                 }
                 Thread.Sleep(1);
             }
@@ -172,8 +174,11 @@ namespace DofusMaster
 
         public static void OrderReplication(int X, int Y)
         {
-            if (replicationMode != ReplicationMode.None)
+            if (replicationMode != ReplicationMode.None && canReplicate)
+            {
                 replicationQueue.Enqueue(new replicationData(X, Y, replicationMode));
+                canReplicate = false;
+            }
         }
     }
 

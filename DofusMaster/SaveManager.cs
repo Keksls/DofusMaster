@@ -64,6 +64,7 @@ namespace DofusMaster
         public Dictionary<string, DofusAccount> Accounts { get; set; }
         public int MinMovementDelay { get; set; }
         public int MaxMovementDelay { get; set; }
+        public bool AccountShortcutCtrl { get; set; }
         public VirtualKeys NextKey { get; set; }
         public VirtualKeys PreviewKey { get; set; }
         public VirtualKeys instantKey { get; set; }

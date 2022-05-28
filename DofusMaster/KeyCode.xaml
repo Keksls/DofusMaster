@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="KeyCode" Height="128" Width="128" ResizeMode="NoResize">
     <Grid Background="#363333">
-        <Label x:Name="lbKeyCode" Height="64" Foreground="#F6E9E9" Margin="8 0 8 0" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="36" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center">9999</Label>
+        <Label x:Name="lbKeyCode" Height="64" Foreground="#F6E9E9" Margin="8 0 8 0" FontFamily="Segoe UI Semibold" FontWeight="Normal" FontSize="36" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center">press</Label>
     </Grid>
 </Window>
