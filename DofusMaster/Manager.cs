@@ -57,31 +57,67 @@ namespace DofusMaster
 
         private static void Manager_PreviewKeyPressed()
         {
-            if (!HasAccounts)
+            if (!HasAccounts || !HasEnabledAccount())
                 return;
-            currentAccountIndex--;
-            if (currentAccountIndex < 0)
-                currentAccountIndex = ConnectedAccounts.Count - 1;
-            ConnectedAccounts[currentAccountIndex].ShowWindow();
+
+            int i = 0;
+            while (i < ConnectedAccounts.Count)
+            {
+                currentAccountIndex--;
+                if (currentAccountIndex < 0)
+                    currentAccountIndex = ConnectedAccounts.Count - 1;
+                if (ConnectedAccounts[currentAccountIndex].Selected)
+                {
+                    ConnectedAccounts[currentAccountIndex].ShowWindow();
+                    break;
+                }
+                i++;
+            }
         }
 
         private static void Manager_NextKeyPressed()
         {
-            if (!HasAccounts)
+            if (!HasAccounts || !HasEnabledAccount())
                 return;
-            currentAccountIndex++;
-            if (currentAccountIndex >= ConnectedAccounts.Count)
-                currentAccountIndex = 0;
-            ConnectedAccounts[currentAccountIndex].ShowWindow();
+
+            int i = 0;
+            while (i < ConnectedAccounts.Count)
+            {
+                currentAccountIndex++;
+                if (currentAccountIndex >= ConnectedAccounts.Count)
+                    currentAccountIndex = 0;
+                if (ConnectedAccounts[currentAccountIndex].Selected)
+                {
+                    ConnectedAccounts[currentAccountIndex].ShowWindow();
+                    break;
+                }
+                i++;
+            }
+        }
+
+        public static bool HasEnabledAccount()
+        {
+            foreach (var account in ConnectedAccounts)
+                if (account.Selected)
+                    return true;
+            return false;
         }
 
         private static void Keys_KeyDown(VirtualKeys key)
         {
             if (key == SaveManager.Save.NextKey)
-                NextKeyPressed?.Invoke();
+            {
+                if (!SaveManager.Save.NextPreviexCtrl || SaveManager.Save.NextPreviexCtrl && IO.isCtrl)
+                    if (!SaveManager.Save.NextPreviexShift || SaveManager.Save.NextPreviexShift && IO.isShift)
+                        NextKeyPressed?.Invoke();
+            }
 
             else if (key == SaveManager.Save.PreviewKey)
-                PreviewKeyPressed?.Invoke();
+            {
+                if (!SaveManager.Save.NextPreviexCtrl || SaveManager.Save.NextPreviexCtrl && IO.isCtrl)
+                    if (!SaveManager.Save.NextPreviexShift || SaveManager.Save.NextPreviexShift && IO.isShift)
+                        PreviewKeyPressed?.Invoke();
+            }
 
             else if (key == SaveManager.Save.instantKey)
                 ReplicationMode = ReplicationMode.Instent;
@@ -141,6 +177,8 @@ namespace DofusMaster
                 case ReplicationMode.Instent:
                     foreach (var account in ConnectedAccounts)
                     {
+                        if (!account.Selected)
+                            continue;
                         account.InstentMouseClick(data.X, data.Y);
                         Thread.Sleep(rnd.Next(SaveManager.Save.MinMovementDelay, SaveManager.Save.MaxMovementDelay));
                     }
@@ -149,6 +187,8 @@ namespace DofusMaster
                 case ReplicationMode.Smooth:
                     foreach (var account in ConnectedAccounts)
                     {
+                        if (!account.Selected)
+                            continue;
                         account.ShowWindow();
                         Thread.Sleep(rnd.Next(SaveManager.Save.MinMovementDelay, SaveManager.Save.MaxMovementDelay));
                         account.SmoothMouseClick(data.X, data.Y);

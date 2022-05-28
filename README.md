@@ -1,5 +1,3 @@
-# DofusMaster
-
 DISCLAMER :
 
 Théoriquement indétectable, ce n'est PAS un bot, ça ne touche pas à dofus (ni au client, ni au launcher).
@@ -25,17 +23,19 @@ vous pouvez switcher de compte avec les touches [NextKey] et [PreviewKey].
 vous pouvez déselectionner une compte pour qu'il ne soit pas pris en compte par dofus master.
 vous pouvez directement switcher sur un compte en pressant la touche du numpad correspondant à sont ordre dans la liste (1, 2, 3, etc).
 vous pouvez réorganiser l'ordre des comptes pour boucler dans l'ordre de la timeline de combat de dofus. (pas de détection auto d'initiative, on reste flou sur la légalitée).
-
+Par defaut, les touche pour changer de comptes sont Shift + X et Shift + C (vous pouvez changer ça dans la config => save.json)
 
 
 aide à la config :
 
 MinMovementDelay / MaxMovementDelay : durrée entre deux simulation de clique lorsque l'utilisateur veux répliquer une action de clique sur plusieurs fenêtres. Min doit être inférieur à Max.
-AccountShortcutCtrl : true ou false, si activé, vous ne pourrez utiliser les racourcis de comptes (1, 2, 3 => pavé numérique) que si la touche Control gauche  est enfoncée
+AccountShortcutCtrl : true ou false, si activé, vous ne pourrez utiliser les racourcis de comptes (1, 2, 3 => pavé numérique) que si la touche Control est enfoncée
 NextKey : code de la touche clavier qui passe au compte suivant
 PreviewKey : code de la touche clavier qui passe au compte précédent
 instantKey : code de la touche clavier qui passe le mode de réplication à 'Instant'
 smoothKey : code de la touche clavier qui passe le mode de réplication à 'Smooth'
+NextPreviexCtrl : true ou false, si activé, vous ne pourrez utiliser les racourcis Next et Preview que si la touche Control est enfoncée
+NextPreviexShift : true ou false, si activé, vous ne pourrez utiliser les racourcis Next et Preview que si la touche Shift est enfoncée
 
 
 

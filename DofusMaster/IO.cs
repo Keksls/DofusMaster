@@ -10,6 +10,7 @@ namespace DofusMaster
         public static event Action<VirtualKeys> KeyUp;
         public static event Action<int, int> LeftClick;
         public static bool isCtrl { get; private set; }
+        public static bool isShift { get; private set; }
 
         static IO()
         {
@@ -24,12 +25,16 @@ namespace DofusMaster
         {
             if (key == VirtualKeys.Control || key == VirtualKeys.LeftControl || key == VirtualKeys.RightControl)
                 isCtrl = false;
+            else if (key == VirtualKeys.Shift || key == VirtualKeys.LeftShift || key == VirtualKeys.RightShift)
+                isShift = false;
         }
 
         private static void Keys_KeyDown(VirtualKeys key)
         {
             if (key == VirtualKeys.Control || key == VirtualKeys.LeftControl || key == VirtualKeys.RightControl)
                 isCtrl = true;
+            else if (key == VirtualKeys.Shift || key == VirtualKeys.LeftShift || key == VirtualKeys.RightShift)
+                isShift = true;
         }
 
         private static void IO_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -41,7 +46,7 @@ namespace DofusMaster
         {
             if (e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown || e.KeyboardState == GlobalKeyboardHook.KeyboardState.SysKeyDown)
                 KeyDown?.Invoke((VirtualKeys)e.KeyboardData.VirtualCode);
-            
+
             else if (e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyUp || e.KeyboardState == GlobalKeyboardHook.KeyboardState.SysKeyUp)
                 KeyUp?.Invoke((VirtualKeys)e.KeyboardData.VirtualCode);
         }

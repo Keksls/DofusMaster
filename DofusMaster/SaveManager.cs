@@ -12,7 +12,7 @@ namespace DofusMaster
 
         static SaveManager()
         {
-            Path = System.Environment.CurrentDirectory + @"\save.json";
+            Path = Environment.CurrentDirectory + @"\save.json";
             if (!HasSave())
                 CreateDefaultSave();
             LoadSave();
@@ -65,6 +65,8 @@ namespace DofusMaster
         public int MinMovementDelay { get; set; }
         public int MaxMovementDelay { get; set; }
         public bool AccountShortcutCtrl { get; set; }
+        public bool NextPreviexCtrl { get; set; }
+        public bool NextPreviexShift { get; set; }
         public VirtualKeys NextKey { get; set; }
         public VirtualKeys PreviewKey { get; set; }
         public VirtualKeys instantKey { get; set; }

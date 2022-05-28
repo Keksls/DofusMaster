@@ -120,6 +120,8 @@ namespace DofusMaster
                 {
                     foreach (var account in Manager.ConnectedAccounts)
                     {
+                        if (!account.Selected)
+                            continue;
                         account.WriteIntoConsole(text);
                         Thread.Sleep(10);
                     }
@@ -145,12 +147,18 @@ namespace DofusMaster
                     Thread t = new Thread(() =>
                     {
                         foreach (var account in Manager.ConnectedAccounts)
+                        {
+                            if (!account.Selected)
+                                continue;
                             account.WriteIntoConsole("/travel " + x + " " + y);
+                        }
 
                         Thread.Sleep(1500);
 
                         foreach (var account in Manager.ConnectedAccounts)
                         {
+                            if (!account.Selected)
+                                continue;
                             account.ShowWindow();
                             Thread.Sleep(100);
                             account.KeyPress(WindowsInput.Native.VirtualKeyCode.RETURN);
@@ -168,6 +176,8 @@ namespace DofusMaster
             {
                 foreach (var account in Manager.ConnectedAccounts)
                 {
+                    if (!account.Selected)
+                        continue;
                     account.Process.Kill();
                     Thread.Sleep(100);
                 }
