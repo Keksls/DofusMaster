@@ -1,20 +1,11 @@
 DISCLAMER :
 
-Théoriquement indétectable, ce n'est PAS un bot, ça ne touche pas à dofus (ni au client, ni au launcher).
+Ce n'est PAS un bot, ça ne touche pas à dofus (ni au client, ni au launcher).
 Ce n'est pas dofusMaster qui lance vos comptes, à vous de les lancer avec le launcher.
 Pas de MITM ici, ni de pixel detection, juste des évenement windows bas niveau qui font croire à l'OS (pas à dofus) que vous faites des Alt+Tab et des cliques souris rapidement.
 C'était une pratique toléré par Ankama, visiblement ça ne l'est plus.
-Cependant, honetement, ça leut coûterais cher en log pour détecter ça. C'est théoriquement possible, si ils logs chaques actions (clics, focus windows) et qu'ils les lient aux comptes par IP.
-C'est coûteux à transferer et stocker pour très peut de use case, je m'en sert depuis un moment sans pb.
-
-Pour ceux qui pense que c'est un 'virus' (*bruit de fantôme qui fait peur*), le code est sur github, c'est cadeau, clonez le et refaites vos builds si vous êtres pas confiant.
-Pour ceux qui aurait peur que des petits malin fassent un fork avec un keylogger ou autre dedans, assurez-vous d'avoir téléchargé sur le lien officiel (en bas de cette page).
-Pour les plus perspicaces qui ont remarqué les .dll 'Gma.System.MouseKeyHook' et 'WindowsInput'. 
-Tout à fait possible de faire un keylogger avec ça, je suis pas sur DM soit pas signalé comme virus par certains antivirus a cause de ça.
-Cependant, bien obligé de hook les IO du PC (Clavier / souris) pour que le processus de DM sache quand le joueur clique ou utilise un racourci clavier pour switch de fenêtre, sans avoir le focus.
 
 Le but est de remplacer Naoi/Organizer/vieux scipts autoit. ça à été dev en une aprèm, si vous voulez des modifs dites-le sur github.
-
 
 
 Switch de compte :
